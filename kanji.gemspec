@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Alexandre de Oliveira"]
   s.email       = ["chavedomundo@gmail.com"]
   s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{Recognize japanese Kanjis in images}
+  s.description = %q{Attempt to create a gem based on machine learning for recognize japanese Kanjis in images.}
 
   s.rubyforge_project = "kanji"
 
