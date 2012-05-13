@@ -13,7 +13,8 @@ module Kanji::Image
 
       sample = generate_sample(white_canvas)
       sample.save("tmp/output_get_pixel.png")
-      sample
+      @resource = sample
+      self
     end
 
     def generate_sample(sample)

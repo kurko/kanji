@@ -13,22 +13,20 @@ module Kanji::Neurons
       @samples[net_name] << sample
     end
 
-    def train
-      5000.times do
+    def train(options = {})
+      options = { times: 7000 }.merge(options)
+      options[:times].times do
         net_name = random_sample.keys.first
         net = @nets[net_name]
         sample = random_sample
 
         output = net.execute(sample.values.first)
         expected = expected_output(net_name, sample.values.first)
-        #print expected
-        #print " = "
-        #puts output
+        # puts "expected: " + expected.to_s + " -> " + output.to_s
 
         net.backpropagate(expected, output)
       end
     end
-
 
     def expected_output(net_name, input)
       @nets[net_name].inputs.any? { |i| i == input } ? 1 : 0

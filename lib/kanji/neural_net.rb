@@ -11,8 +11,8 @@ module Kanji::Neurons
       @trainer = nil
     end
 
-    def create_net(net_name)
-      @nets[net_name] = Net.new(neurons: 5)
+    def create_net(net_name, neurons_length)
+      @nets[net_name] = Net.new(neurons: neurons_length)
       @nets[net_name].setup_neuron_layers
     end
 
@@ -33,12 +33,7 @@ module Kanji::Neurons
     def output_log
       puts "neurons: "+@nets.inspect
       puts "weigths: "+@weights.inspect
-      
       puts ""
     end
-
   end
-
-
 end
-

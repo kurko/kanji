@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Kanji::Neurons::Base, wip: true do
+describe Kanji::Neurons::Base do
   before do
     @net = Kanji::Neurons::Base.new
     @net.create_net(:samurai)
@@ -11,14 +11,12 @@ describe Kanji::Neurons::Base, wip: true do
 
   describe "initialization" do
     it "" do
-      puts @net.trainer.train
-      puts @net.trainer.nets[:samurai].execute([1,0,0,1,1])
-      puts @net.trainer.nets[:shinobi].execute([1,0,1,0,0])
-      puts @net.trainer.nets[:shinobi].execute([1,0,0,1,1])
-      puts @net.trainer.nets[:samurai].execute([1,0,1,0,0])
-
+      @net.trainer.train
+      @net.trainer.nets[:samurai].execute([1,0,0,1,1]).should > 0.9
+      @net.trainer.nets[:shinobi].execute([1,0,1,0,0]).should > 0.9
+      @net.trainer.nets[:shinobi].execute([1,0,0,1,1]).should < 0.1
+      @net.trainer.nets[:samurai].execute([1,0,1,0,0]).should < 0.1
     end
-
   end
 
   describe "#expected_output" do

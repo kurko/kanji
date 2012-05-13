@@ -61,7 +61,7 @@ module Kanji::Neurons
     end
 
     def execute(input)
-      raise "invalid input" if input.length != @inputs[0].length
+      raise "invalid input" unless @inputs.empty? || input.length == @inputs[0].length
       @layers[0] = input
 
       result = 0
@@ -77,17 +77,17 @@ module Kanji::Neurons
           # to the last layer and calculates the weights
           @layers[layer_index-1].each_with_index do |last_neuron, last_neuron_position|
             neuron_input += 
-              last_neuron * @weights[layer_index-1][last_neuron_position][layer_index][neuron_position]
+              (last_neuron * @weights[layer_index-1][last_neuron_position][layer_index][neuron_position]).round(7)
           end
 
-          @layers[layer_index][neuron_position] = neuron_input
+          @layers[layer_index][neuron_position] = neuron_input.round(7)
         end
       end
 
-      neuron_input
+      neuron_input.round(7)
     end
 
-    def backpropagate(expected_output, output, learning_rate = 0.5)
+    def backpropagate(expected_output, output, learning_rate = 0.01)
       output_error = expected_output - output
 
       result = 0
@@ -113,8 +113,8 @@ module Kanji::Neurons
             old_weight = @weights[layer_index-1][last_neuron_position][layer_index][neuron_position]
             old_neuron_output = last_neuron * old_weight
 
-            new_weight = old_weight + learning_rate * output_error * output *
-              old_neuron_output * (1-(old_neuron_output))
+            new_weight = (old_weight + learning_rate * output_error * output *
+              old_neuron_output * (1-(old_neuron_output))).round(7)
 
             # puts expected_output.to_s + " = " +old_weight.to_s + " -> " + new_weight.to_s
             @weights[layer_index-1][last_neuron_position][layer_index][neuron_position] = new_weight
