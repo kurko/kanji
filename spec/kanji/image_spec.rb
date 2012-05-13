@@ -3,6 +3,7 @@ require "spec_helper"
 describe Kanji::Image::Base do
   let(:image_path) { "./spec/fixtures/images/samurai_kanji.png" }
   let(:samurai_poor_quality) { "./spec/fixtures/images/samurai_kanji_quality_10.png" }
+  let(:small_image) { "./spec/fixtures/images/8_pixels.png" }
 
   def image_content(image = image_path)
     ChunkyPNG::Image.from_file(image)
@@ -26,6 +27,13 @@ describe Kanji::Image::Base do
       image.stub_chain(:resource, :dimension, :width).and_return(100)
 
       image.matrix_dimensions(0.1).should == [10, 5]
+    end
+  end
+
+  describe "#prepare_for_neurons" do
+    it "returns pixel values" do
+      image = Kanji::Image::Base.new(small_image)
+      image.prepare_for_neurons.should == [1, 0, 1, 1, 0, 1, 1, 0]
     end
   end
 end

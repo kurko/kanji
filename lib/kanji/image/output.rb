@@ -1,5 +1,7 @@
 module Kanji::Image
   module Output
+    include ::ChunkyPNG
+
     def get_pixels(quality = 0.1)
       image = resource.grayscale
 
@@ -31,6 +33,19 @@ module Kanji::Image
     def matrix_dimensions(quality)
       [ (resource.dimension.width*quality).floor,
         (resource.dimension.height*quality).floor ]
+    end
+
+    def prepare_for_neurons
+      sample = resource.dup.grayscale
+      impulses = []
+      (0..sample.dimension.height-1).each do |y|
+        (0..sample.dimension.width-1).each do |x|
+          pixel = resource[x, y]
+          signal = Color.r(pixel) < 130 ? 1 : 0
+          impulses << signal
+        end
+      end
+      impulses
     end
   end
 end
