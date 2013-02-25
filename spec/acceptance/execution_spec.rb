@@ -6,11 +6,12 @@ describe "Execution" do
 
   describe "image training" do
     before do
-      @samurai = Kanji::Image::Base.new(samurai_sample).get_pixels(0.01).prepare_for_neurons
-      @shinobi = Kanji::Image::Base.new(shinobi_sample).get_pixels(0.01).prepare_for_neurons
+      @samurai = Kanji::Image::Base.new(samurai_sample).get_pixels(0.1).prepare_for_neurons
+      @shinobi = Kanji::Image::Base.new(shinobi_sample).get_pixels(0.1).prepare_for_neurons
     end
 
     it "trains two kanjis" do
+
       neural_net = Kanji::Neurons::Base.new
 
       neural_net.create_net(:samurai, @samurai.length)
@@ -19,10 +20,10 @@ describe "Execution" do
       neural_net.add_input(:shinobi, @shinobi)
 
       neural_net.train
-      neural_net.trainer.nets[:samurai].execute(@samurai).should > 0.8
-      neural_net.trainer.nets[:shinobi].execute(@shinobi).should > 0.8
-      neural_net.trainer.nets[:samurai].execute(@shinobi).should < 0.3
-      neural_net.trainer.nets[:shinobi].execute(@samurai).should < 0.3
+
+      10.times do
+        neural_net.what_is(@samurai)[:answer].should == :samurai
+      end
     end
   end
 end
