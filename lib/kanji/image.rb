@@ -9,12 +9,10 @@ module Kanji::Image
     include Kanji::Image::Output
     include ::ChunkyPNG
 
+    attr_reader :resource
+
     def initialize(image_path = nil)
       @resource = ChunkyPNG::Image.from_file(image_path)
-    end
-
-    def resource
-      @resource
     end
   end
 end

@@ -11,18 +11,18 @@ describe "Execution" do
     end
 
     it "trains two kanjis" do
-
       neural_net = Kanji::Neurons::Base.new
 
       neural_net.create_net(:samurai, @samurai.length)
       neural_net.create_net(:shinobi, @shinobi.length)
+
       neural_net.add_input(:samurai, @samurai)
       neural_net.add_input(:shinobi, @shinobi)
 
       neural_net.train
 
       10.times do
-        neural_net.what_is(@samurai)[:answer].should == :samurai
+        puts neural_net.what_is(@samurai)[:answer].should == :samurai
       end
     end
   end
