@@ -1,8 +1,10 @@
 require "spec_helper"
+require "benchmark"
 
 describe "Execution" do
   let(:samurai_sample) { "./spec/fixtures/images/samurai_kanji.png" }
   let(:shinobi_sample) { "./spec/fixtures/images/shinobi_kanji.png" }
+  let(:verification_times) { 10 }
 
   describe "image training" do
     before do
@@ -20,9 +22,8 @@ describe "Execution" do
       neural_net.add_input(:shinobi, @shinobi)
 
       neural_net.train
-
-      10.times do
-        puts neural_net.what_is(@samurai)[:answer].should == :samurai
+      verification_times.times do
+        neural_net.what_is(@samurai)[:answer].should == :samurai
       end
     end
   end

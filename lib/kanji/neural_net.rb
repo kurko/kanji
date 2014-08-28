@@ -1,6 +1,3 @@
-require "kanji/neurons/net"
-require "kanji/neurons/trainer"
-
 module Kanji::Neurons
   class Base
     attr_accessor :nets

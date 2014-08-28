@@ -1,4 +1,4 @@
-require "ruby_fann/neural_network"
+require "ruby_fann"
 
 require "kanji/version"
 require "kanji/image"
